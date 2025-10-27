@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Tasks Page{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h3>Hey {{ name }}, welcome to your To-Do List!</h3>
+
+    <div class="links">
+        <a href="{{ url_for('add') }}"><button class="button">Add Task</button></a>
+        <a href="{{ url_for('clear') }}"><button class="button">Clear All</button></a>
+        <a href="{{ url_for('logout') }}"><button class="button">Logout</button></a>
+    </div>
+
+    {% if tasks %}
+    <table>
+        <thead>
+            <tr>
+                <th>S.No</th>
+                <th>Task</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ task.task }}</td>
+                <td>{{ task.status }}</td>
+                <td>
+                    <a href="{{ url_for('toggle', task_id=task.id) }}"><button class="action">Status</button></a>
+                    <a href="{{ url_for('delete', task_id=task.id) }}"><button class="action delete">Delete</button></a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <br><br>
+    <h3>No tasks yet — please add one!</h3>
+    {% endif %}
+</div>
+{% endblock %}
